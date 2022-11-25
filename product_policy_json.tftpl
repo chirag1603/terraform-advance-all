@@ -1,0 +1,56 @@
+${jsonencode({
+  "Version" : "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowUserToReadWriteObjectInFolder",
+      "Action": [
+        "s3:PutObject",
+        "s3:ListMultipartUploadParts",
+        "s3:AbortMultipartUpload"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::${system_name}/product/chirag_${product}/",
+        "arn:aws:s3:::${system_name}/product/chirag_${product}/*"
+      ]
+    },
+    {
+      "Sid": "AllowGetBucketLocation",
+      "Action": [
+        "s3:GetBucketLocation"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::${system_name}"
+      ]
+    },
+    {
+      "Sid": "AllowListBucketInFolder",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::${system_name}"
+      ],
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": [
+            "product/chirag_${product}",
+            "product/chirag_${product}/*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "AllowListBucketUploads",
+      "Action": [
+        "s3:ListBucketMultipartUploads"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::${system_name}"
+      ]
+    }
+  ]
+})}
